@@ -6,9 +6,15 @@
     <procedures>
         <item name="main">
             <steps>
-                <item guid="af434d81-b115-4006-b38f-20acfc00a0e4" action="open" session="s1">
+                <item guid="953b019d-f473-4b42-87cc-ee068d909b40" action="eval" useFieldsInCommand="false">
                     <command>
-                        <body>project://regressionsuite-222/session_profiles/REST.ffsp</body>
+                        <body>test = &apos;2021-03-11T07:14:09,629Z INFO  [com.spirent.rlm.api.callback.CallbackApiService] (default task-26) Callback notification received on create/update spirent/testname-def&apos;</body>
+                    </command>
+                    <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                </item>
+                <item guid="1a3e55aa-c238-4b06-a5aa-5919f59aed89" action="open" session="s2" useFieldsInCommand="false">
+                    <command>
+                        <body>project://RepoTest1/session_profiles/REST.ffsp</body>
                     </command>
                     <applicationProperties type="com.fnfr.svt.documents.OpenStepPropertyGroup">
                         <stepProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
@@ -17,10 +23,46 @@
                         <sessionVersion type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                     </applicationProperties>
                 </item>
-                <item guid="9f78661d-3541-441c-bcf7-b6d562a0b570" action="proc1" session="s1" useFieldsInCommand="false">
+                <item guid="29211df4-76f8-4fba-87bc-1fd61cf298e0" action="proc1" session="s2" useFieldsInCommand="false">
                     <command>
-                        <body>-argm testing</body>
+                        <body>-argm [test]</body>
                     </command>
+                    <postProcessing>
+                        <analysisRules>
+                            <item>
+                                <extractorInfo extractorType="none">
+                                    <extractorProperties type="com.fnfr.svt.documents.EmptyExtractorPropertyGroup"/>
+                                </extractorInfo>
+                                <processorInfo ruleType="assert">
+                                    <ruleProperties type="com.fnfr.svt.execution.builtin.processors.AssertionPropertyGroup">
+                                        <expression>1 == 1</expression>
+                                        <actionsWhenTrue>
+                                            <item actionId="DeclareExecutionIssue">
+                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup" severity="OK">
+                                                    <message></message>
+                                                </actionProperties>
+                                            </item>
+                                            <item actionId="PassTestIfNotAlreadyFailed">
+                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                            </item>
+                                        </actionsWhenTrue>
+                                        <actionsWhenFalse>
+                                            <item actionId="DeclareExecutionIssue">
+                                                <actionProperties type="com.fnfr.svt.execution.builtin.actions.ExecutionIssuePropertyGroup">
+                                                    <message>{auto_message_false}</message>
+                                                </actionProperties>
+                                            </item>
+                                            <item actionId="FailTest">
+                                                <actionProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
+                                            </item>
+                                        </actionsWhenFalse>
+                                    </ruleProperties>
+                                </processorInfo>
+                            </item>
+                        </analysisRules>
+                        <storeResponseAt>val</storeResponseAt>
+                        <storeResponseText>true</storeResponseText>
+                    </postProcessing>
                     <applicationProperties type="com.fnfr.svt.documents.EmptyPropertyGroup"/>
                 </item>
             </steps>
